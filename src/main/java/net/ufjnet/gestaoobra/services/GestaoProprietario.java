@@ -1,9 +1,9 @@
 package net.ufjnet.gestaoobra.services;
 
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,38 +20,33 @@ public class GestaoProprietario {
 	private ProprietarioDAO dao;
 
 	@Transactional(readOnly = true)
-	public List<ProprietarioDTO> findAll() {
-		List<Proprietario> result = dao.findAll();
-		return result.stream().map(obj -> new ProprietarioDTO(obj)).collect(Collectors.toList());
-//		return dao.findAll();
+	public Page<ProprietarioDTO> findAll(Pageable pageable) {
+		Page<Proprietario> result = dao.findAll(pageable);
+		return result.map(obj -> new ProprietarioDTO(obj));
 	}
 	
 	@Transactional(readOnly = true)
 	public Optional<ProprietarioDTO> findById(Integer id) {
 		Optional<Proprietario> result = dao.findById(id);
 		return result.map(obj -> new ProprietarioDTO(obj));
-//		return dao.findById(id);
 	}
 	
 	@Transactional(readOnly = true)
 	public Optional<ProprietarioDTO> findByName(String nome) {
 		Optional<Proprietario> result = dao.findByNome(nome);
 		return result.map(obj -> new ProprietarioDTO(obj));
-//		return dao.findByNome(nome);
 	}
 	
 	@Transactional(readOnly = true)
 	public Optional<ProprietarioDTO> findByCpf(String cpf) {
 		Optional<Proprietario> result = dao.findByCpf(cpf);
 		return result.map(obj -> new ProprietarioDTO(obj));
-//		return dao.findByCpf(cpf);
 	}
 	
 	@Transactional(readOnly = true)
 	public Optional<ProprietarioDTO> findByEmail(String email) {
 		Optional<Proprietario> result = dao.findByEmail(email);
 		return result.map(obj -> new ProprietarioDTO(obj));
-//		return dao.findByEmail(email);
 	}
 	
 	@Transactional
