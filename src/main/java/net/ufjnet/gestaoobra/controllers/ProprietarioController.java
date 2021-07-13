@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import net.ufjnet.gestaoobra.dtos.ProprietarioDTO;
 import net.ufjnet.gestaoobra.models.Proprietario;
 import net.ufjnet.gestaoobra.services.GestaoProprietario;
 
@@ -27,7 +28,7 @@ public class ProprietarioController {
 //	private ProprietarioDAO propDAO;
 	
 	@GetMapping
-	public List<Proprietario> buscarTodos() {
+	public List<ProprietarioDTO> buscarTodos() {
 		return service.findAll();
 //		return "primeiro endpoint de Gestão de Obras";
 	}

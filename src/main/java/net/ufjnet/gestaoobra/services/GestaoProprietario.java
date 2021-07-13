@@ -2,11 +2,13 @@ package net.ufjnet.gestaoobra.services;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import lombok.AllArgsConstructor;
+import net.ufjnet.gestaoobra.dtos.ProprietarioDTO;
 import net.ufjnet.gestaoobra.models.Proprietario;
 import net.ufjnet.gestaoobra.repositories.ProprietarioDAO;
 import net.ufjnet.gestaoobra.services.exceptions.BusinessException;
@@ -17,8 +19,10 @@ public class GestaoProprietario {
 	
 	private ProprietarioDAO dao;
 
-	public List<Proprietario> findAll() {
-		return dao.findAll();
+	public List<ProprietarioDTO> findAll() {
+		List<Proprietario> result = dao.findAll();
+		return result.stream().map(obj -> new ProprietarioDTO(obj)).collect(Collectors.toList());
+//		return dao.findAll();
 	}
 	
 	public Optional<Proprietario> findById(Integer id) {
