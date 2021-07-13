@@ -8,6 +8,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -34,12 +37,17 @@ public class Proprietario implements Serializable{
 	@Column
 	private Integer codigo;
 	
+	@NotBlank
+	@Size(max = 60)
 	@Column(name = "nome", nullable = false)
 	private String nome;
 	
+	@Email
 	@Column(nullable = false)
 	private String email;
 	
+	@NotBlank
+	@Size(max = 14)
 	@Column(nullable = false)
 	private String cpf;
 
