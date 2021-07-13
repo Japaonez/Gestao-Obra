@@ -40,7 +40,7 @@ public class ProprietarioController {
 //	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<Proprietario> buscarUm(@PathVariable Integer id) {
+	public ResponseEntity<ProprietarioDTO> buscarUm(@PathVariable Integer id) {
 //		Optional<Proprietario> objOpt = service.findById(id);
 //		Proprietario obj = objOpt.orElse(null);
 //		return ResponseEntity.ok(obj);
@@ -48,29 +48,29 @@ public class ProprietarioController {
 	}
 	
 	@GetMapping("/nome/{nome}")
-	public ResponseEntity<Proprietario> buscarNome(@PathVariable String nome) {
+	public ResponseEntity<ProprietarioDTO> buscarNome(@PathVariable String nome) {
 		return service.findByName(nome).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
 	}
 	
 	@GetMapping("/cpf/{cpf}")
-	public ResponseEntity<Proprietario> buscarCpf(@PathVariable String cpf) {
+	public ResponseEntity<ProprietarioDTO> buscarCpf(@PathVariable String cpf) {
 		return service.findByCpf(cpf).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
 	}
 	
 	@PostMapping
-	public ResponseEntity<Proprietario> incluir(@Valid @RequestBody Proprietario obj){
-		obj = service.save(obj);
-		return ResponseEntity.created(null).body(obj);
+	public ResponseEntity<ProprietarioDTO> incluir(@Valid @RequestBody Proprietario obj){
+		ProprietarioDTO objDTO = service.save(obj);
+		return ResponseEntity.created(null).body(objDTO);
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<Proprietario> atualizar(@PathVariable Integer id, @RequestBody Proprietario obj){
+	public ResponseEntity<ProprietarioDTO> atualizar(@PathVariable Integer id, @RequestBody Proprietario obj){
 		if(!service.existById(id)) {
 			return ResponseEntity.notFound().build();
 		}
 		obj.setCodigo(id);
-		obj = service.save(obj);
-		return ResponseEntity.ok(obj);
+		ProprietarioDTO objDTO = service.save(obj);
+		return ResponseEntity.ok(objDTO);
 	}
 	
 	@DeleteMapping("/{id}")

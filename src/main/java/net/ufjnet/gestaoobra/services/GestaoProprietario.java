@@ -19,30 +19,43 @@ public class GestaoProprietario {
 	
 	private ProprietarioDAO dao;
 
+	@Transactional(readOnly = true)
 	public List<ProprietarioDTO> findAll() {
 		List<Proprietario> result = dao.findAll();
 		return result.stream().map(obj -> new ProprietarioDTO(obj)).collect(Collectors.toList());
 //		return dao.findAll();
 	}
 	
-	public Optional<Proprietario> findById(Integer id) {
-		return dao.findById(id);
+	@Transactional(readOnly = true)
+	public Optional<ProprietarioDTO> findById(Integer id) {
+		Optional<Proprietario> result = dao.findById(id);
+		return result.map(obj -> new ProprietarioDTO(obj));
+//		return dao.findById(id);
 	}
 	
-	public Optional<Proprietario> findByName(String nome) {
-		return dao.findByNome(nome);
+	@Transactional(readOnly = true)
+	public Optional<ProprietarioDTO> findByName(String nome) {
+		Optional<Proprietario> result = dao.findByNome(nome);
+		return result.map(obj -> new ProprietarioDTO(obj));
+//		return dao.findByNome(nome);
 	}
 	
-	public Optional<Proprietario> findByCpf(String nome) {
-		return dao.findByCpf(nome);
+	@Transactional(readOnly = true)
+	public Optional<ProprietarioDTO> findByCpf(String cpf) {
+		Optional<Proprietario> result = dao.findByCpf(cpf);
+		return result.map(obj -> new ProprietarioDTO(obj));
+//		return dao.findByCpf(cpf);
 	}
 	
-	public Optional<Proprietario> findByEmail(String email) {
-		return dao.findByEmail(email);
+	@Transactional(readOnly = true)
+	public Optional<ProprietarioDTO> findByEmail(String email) {
+		Optional<Proprietario> result = dao.findByEmail(email);
+		return result.map(obj -> new ProprietarioDTO(obj));
+//		return dao.findByEmail(email);
 	}
 	
 	@Transactional
-	public Proprietario save(Proprietario obj) {
+	public ProprietarioDTO save(Proprietario obj) {
 		boolean cpfExists = dao.findByCpf(obj.getCpf()).stream()
 				.anyMatch(objResult -> !objResult.equals(obj));
 		if(cpfExists) {
@@ -53,7 +66,8 @@ public class GestaoProprietario {
 		if(emailExists) {
 			throw new BusinessException("E-mail já cadastrado!");
 		}
-		return dao.save(obj);
+		
+		return new ProprietarioDTO(dao.save(obj));
 	}
 	
 	@Transactional
