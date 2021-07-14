@@ -19,44 +19,38 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import net.ufjnet.gestaoobra.models.Obra;
+import net.ufjnet.gestaoobra.models.SubItem;
 
 @Setter
 @Getter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
 @NoArgsConstructor
 @AllArgsConstructor
-@JsonPropertyOrder({"codigoObra", "descricaoObra", "localizacaoObra", "complementoObra", "Proprietario"})
-public class ObraDTO extends RepresentationModel<ObraDTO> implements Serializable{
+@JsonPropertyOrder({"codigoSubItem", "descricaoSubItem", "localizacaoSubItem", "complementoSubItem", "Item"})
+public class SubItemDTO extends RepresentationModel<SubItemDTO> implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@EqualsAndHashCode.Include
-	@JsonProperty("codigoObra")
+	@JsonProperty("codigoSubItem")
 	private Integer codigo;
 
 	@NotBlank
 	@Size(max = 255)
-	@JsonProperty("descricaoObra")
+	@JsonProperty("descricaoSubItem")
 	private String descricao;
 	
-	@NotBlank
-	@Size(max = 255)
-	@JsonProperty("localizacaoObra")
-	private String localizacao;
-	
-	@JsonProperty("complementoObra")
+	@JsonProperty("complementoSubItem")
 	private String complemento;
 	
 	@NotNull
 	@Valid
 	@ConvertGroup(from = Default.class, to = ValidationGroups.ProprietarioId.class)
-	private ProprietarioDTO proprietario;
+	private ItemDTO item;
 	
-	public ObraDTO(Obra obj) {
+	public SubItemDTO(SubItem obj) {
 		codigo = obj.getCodigo();
 		descricao = obj.getDescricao();
-		localizacao = obj.getLocalizacao();
 		complemento = obj.getComplemento();
-		proprietario = new ProprietarioDTO(obj.getProprietario());
+		item = new ItemDTO(obj.getItem());
 	}
 }
