@@ -53,19 +53,31 @@ public class GestaoProprietario {
 	}
 	
 	@Transactional
-	public ProprietarioDTO save(Proprietario obj) {
-		boolean cpfExists = dao.findByCpf(obj.getCpf()).stream()
-				.anyMatch(objResult -> !objResult.equals(obj));
+	public ProprietarioDTO update(ProprietarioDTO obj) {
+		Proprietario entity = dao.findById(obj.getCodigo())
+				.orElseThrow(() -> new BusinessException("Registros não encontrados!!!"));
+		entity.setNome(obj.getNome());
+		entity.setCpf(obj.getCpf());
+		entity.setEmail(obj.getEmail());
+		return new ProprietarioDTO(dao.save(entity));
+	}
+	
+	@Transactional
+	public ProprietarioDTO save(ProprietarioDTO objBody) {
+		Proprietario entity = new Proprietario(objBody.getCodigo(), objBody.getNome(), objBody.getCpf(), objBody.getEmail());
+		
+		boolean cpfExists = dao.findByCpf(objBody.getCpf()).stream()
+				.anyMatch(objResult -> !objResult.equals(objBody));
 		if(cpfExists) {
 			throw new BusinessException("CPF já cadastrado!");
 		}
-		boolean emailExists = dao.findByEmail(obj.getEmail()).stream()
-				.anyMatch(objResult -> !objResult.equals(obj));
+		boolean emailExists = dao.findByEmail(objBody.getEmail()).stream()
+				.anyMatch(objResult -> !objResult.equals(objBody));
 		if(emailExists) {
 			throw new BusinessException("E-mail já cadastrado!");
 		}
 		
-		return new ProprietarioDTO(dao.save(obj));
+		return new ProprietarioDTO(dao.save(entity));
 	}
 	
 	@Transactional

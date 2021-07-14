@@ -26,7 +26,6 @@ import org.springframework.web.bind.annotation.RestController;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import net.ufjnet.gestaoobra.dtos.ProprietarioDTO;
-import net.ufjnet.gestaoobra.models.Proprietario;
 import net.ufjnet.gestaoobra.services.GestaoProprietario;
 
 @RestController
@@ -109,7 +108,7 @@ public class ProprietarioController {
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	@Operation(summary = "Insere um novo proprietário")
-	public ResponseEntity<ProprietarioDTO> incluir(@RequestBody Proprietario objBody) {
+	public ResponseEntity<ProprietarioDTO> incluir(@RequestBody ProprietarioDTO objBody) {
 		ProprietarioDTO objDTO = service.save(objBody);
 		objDTO.add(linkTo(methodOn(ProprietarioController.class).buscarUm(objDTO.getCodigo())).withSelfRel());
 		return ResponseEntity.ok(objDTO);
@@ -117,7 +116,7 @@ public class ProprietarioController {
 
 	@PutMapping
 	@Operation(summary = "Atualiza um proprietário por id")
-	public ResponseEntity<ProprietarioDTO> atualizar(@PathVariable Integer id, @RequestBody Proprietario objBody) {
+	public ResponseEntity<ProprietarioDTO> atualizar(@PathVariable Integer id, @RequestBody ProprietarioDTO objBody) {
 		if (!service.existById(id)) {
 			return ResponseEntity.notFound().build();
 		}
