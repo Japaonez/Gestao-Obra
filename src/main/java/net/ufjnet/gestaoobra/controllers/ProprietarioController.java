@@ -115,13 +115,9 @@ public class ProprietarioController {
 	}
 
 	@PutMapping
-	@Operation(summary = "Atualiza um proprietário por id")
+	@Operation(summary = "Atualiza um proprietário")
 	public ResponseEntity<ProprietarioDTO> atualizar(@PathVariable Integer id, @RequestBody ProprietarioDTO objBody) {
-		if (!service.existById(id)) {
-			return ResponseEntity.notFound().build();
-		}
-		objBody.setCodigo(id);
-		ProprietarioDTO objDTO = service.save(objBody);
+		ProprietarioDTO objDTO = service.update(objBody);
 		objDTO.add(linkTo(methodOn(ProprietarioController.class).buscarUm(objDTO.getCodigo())).withSelfRel());
 		return ResponseEntity.ok(objDTO);
 	}		

@@ -9,7 +9,9 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
+import net.ufjnet.gestaoobra.models.Obra;
 import net.ufjnet.gestaoobra.models.Proprietario;
+import net.ufjnet.gestaoobra.repositories.ObraDAO;
 import net.ufjnet.gestaoobra.repositories.ProprietarioDAO;
 
 @EnableAutoConfiguration
@@ -19,6 +21,9 @@ public class BckendGtoApplication implements CommandLineRunner{
 
 	@Autowired
 	private ProprietarioDAO propDAO;
+	
+	@Autowired
+	private ObraDAO obraDAO;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(BckendGtoApplication.class, args);
@@ -32,7 +37,13 @@ public class BckendGtoApplication implements CommandLineRunner{
 		Proprietario p2 = new Proprietario(null, "Larissa", "larissa@gmail.com", "67890");
 		Proprietario p3 = new Proprietario(null, "Joao", "joao@gmail.com", "24680");
 		
+		Obra o1 = new Obra(null, "Descrição", "Localização", "Complemento");
+		Obra o2 = new Obra(null, "Sobrado com 4 suítes", "Rua Dona Olimpia, 1414, Vila Fátima", "");
+		Obra o3 = new Obra(null, "Casa geminada", "Rua 15, 1515, Setor Hermosa", "");
+		Obra o4 = new Obra(null, "Casa com 3 quartos", "Rua 16, 1616, Setor Brisas", "");
+		
 		propDAO.saveAll(Arrays.asList(p1, p2, p3));
+		obraDAO.saveAll(Arrays.asList(o1, o2, o3, o4));
 	}
 
 }
