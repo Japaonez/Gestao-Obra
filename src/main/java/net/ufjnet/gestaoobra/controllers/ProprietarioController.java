@@ -1,7 +1,5 @@
 package net.ufjnet.gestaoobra.controllers;
 
-import javax.validation.Valid;
-
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
@@ -12,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.hateoas.CollectionModel;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +20,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import net.ufjnet.gestaoobra.dtos.ProprietarioDTO;
@@ -72,44 +72,58 @@ public class ProprietarioController {
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<ProprietarioDTO> buscarUm(@PathVariable Integer id) {
-//		Optional<Proprietario> objOpt = service.findById(id);
-//		Proprietario obj = objOpt.orElse(null);
-//		return ResponseEntity.ok(obj);
-		return service.findById(id).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+		ProprietarioDTO objDTO = service.findById(id);
+		objDTO.add(linkTo(methodOn(ProprietarioController.class).buscarUm(id)).withSelfRel());
+		return ResponseEntity.ok(objDTO);
 	}
-	
+
 	@GetMapping("/nome/{nome}")
 	public ResponseEntity<ProprietarioDTO> buscarNome(@PathVariable String nome) {
-		return service.findByName(nome).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+		ProprietarioDTO objDTO = service.findByNome(nome);
+		objDTO.add(linkTo(methodOn(ProprietarioController.class).buscarNome(nome)).withSelfRel());
+		return ResponseEntity.ok(objDTO);
 	}
-	
+
 	@GetMapping("/cpf/{cpf}")
 	public ResponseEntity<ProprietarioDTO> buscarCpf(@PathVariable String cpf) {
-		return service.findByCpf(cpf).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+		ProprietarioDTO objDTO = service.findByCPF(cpf);
+		objDTO.add(linkTo(methodOn(ProprietarioController.class).buscarCpf(cpf)).withSelfRel());
+		return ResponseEntity.ok(objDTO);
 	}
-	
-	@PostMapping
-	public ResponseEntity<ProprietarioDTO> incluir(@Valid @RequestBody Proprietario obj){
-		ProprietarioDTO objDTO = service.save(obj);
-		return ResponseEntity.created(null).body(objDTO);
-	}
-	
-	@PutMapping("/{id}")
-	public ResponseEntity<ProprietarioDTO> atualizar(@PathVariable Integer id, @RequestBody Proprietario obj){
-		if(!service.existById(id)) {
-			return ResponseEntity.notFound().build();
-		}
-		obj.setCodigo(id);
-		ProprietarioDTO objDTO = service.save(obj);
+
+	@GetMapping("/email/{email}")
+	public ResponseEntity<ProprietarioDTO> buscarEmail(@PathVariable String email) {
+		ProprietarioDTO objDTO = service.findByEmail(email);
+		objDTO.add(linkTo(methodOn(ProprietarioController.class).buscarEmail(email)).withSelfRel());
 		return ResponseEntity.ok(objDTO);
 	}
 	
+	@PostMapping
+	@ResponseStatus(HttpStatus.CREATED)
+	public ResponseEntity<ProprietarioDTO> incluir(@RequestBody Proprietario objBody) {
+		ProprietarioDTO objDTO = service.save(objBody);
+		objDTO.add(linkTo(methodOn(ProprietarioController.class).buscarUm(objDTO.getCodigo())).withSelfRel());
+		return ResponseEntity.ok(objDTO);
+	}
+
+	@PutMapping
+	public ResponseEntity<ProprietarioDTO> atualizar(@PathVariable Integer id, @RequestBody Proprietario objBody) {
+		if (!service.existById(id)) {
+			return ResponseEntity.notFound().build();
+		}
+		objBody.setCodigo(id);
+		ProprietarioDTO objDTO = service.save(objBody);
+		objDTO.add(linkTo(methodOn(ProprietarioController.class).buscarUm(objDTO.getCodigo())).withSelfRel());
+		return ResponseEntity.ok(objDTO);
+	}		
+
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Proprietario> excluir(@PathVariable Integer id){
-		if(!service.existById(id)) {
+	public ResponseEntity<Void> excluir(@PathVariable Integer id) {
+		if (!service.existById(id)) {
 			return ResponseEntity.notFound().build();
 		}
 		service.deleteById(id);
 		return ResponseEntity.noContent().build();
 	}
+
 }

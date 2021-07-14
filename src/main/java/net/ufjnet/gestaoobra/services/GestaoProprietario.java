@@ -1,7 +1,5 @@
 package net.ufjnet.gestaoobra.services;
 
-import java.util.Optional;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -25,28 +23,33 @@ public class GestaoProprietario {
 		return result.map(obj -> new ProprietarioDTO(obj));
 	}
 	
+
 	@Transactional(readOnly = true)
-	public Optional<ProprietarioDTO> findById(Integer id) {
-		Optional<Proprietario> result = dao.findById(id);
-		return result.map(obj -> new ProprietarioDTO(obj));
+	public ProprietarioDTO findById(Integer id) {
+		Proprietario result = dao.findById(id).
+				orElseThrow(() -> new BusinessException("Registros não encontrados!!!"));
+		return new ProprietarioDTO(result);	
 	}
 	
 	@Transactional(readOnly = true)
-	public Optional<ProprietarioDTO> findByName(String nome) {
-		Optional<Proprietario> result = dao.findByNome(nome);
-		return result.map(obj -> new ProprietarioDTO(obj));
-	}
+	public ProprietarioDTO findByNome(String nome) {
+		Proprietario result = dao.findByNome(nome).
+				orElseThrow(() -> new BusinessException("Registros não encontrados!!!"));
+		return new ProprietarioDTO(result);
+    	}
 	
 	@Transactional(readOnly = true)
-	public Optional<ProprietarioDTO> findByCpf(String cpf) {
-		Optional<Proprietario> result = dao.findByCpf(cpf);
-		return result.map(obj -> new ProprietarioDTO(obj));
-	}
+	public ProprietarioDTO findByCPF(String cpf) {
+		Proprietario result = dao.findByCpf(cpf).
+				orElseThrow(() -> new BusinessException("Registros não encontrados!!!"));
+		return new ProprietarioDTO(result);
+    }
 	
 	@Transactional(readOnly = true)
-	public Optional<ProprietarioDTO> findByEmail(String email) {
-		Optional<Proprietario> result = dao.findByEmail(email);
-		return result.map(obj -> new ProprietarioDTO(obj));
+	public ProprietarioDTO findByEmail(String email) {
+		Proprietario result = dao.findByEmail(email).
+				orElseThrow(() -> new BusinessException("Registros não encontrados!!!"));
+		return new ProprietarioDTO(result);
 	}
 	
 	@Transactional
