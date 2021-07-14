@@ -7,12 +7,12 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.validation.groups.ConvertGroup;
+import javax.validation.groups.Default;
 
 import org.springframework.hateoas.RepresentationModel;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.fasterxml.jackson.databind.ser.std.StdKeySerializers.Default;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -47,9 +47,9 @@ public class ObraDTO extends RepresentationModel<ObraDTO> implements Serializabl
 	@JsonProperty("complementoObra")
 	private String complemento;
 	
-	@ConvertGroup(from = Default.class, to = ValidationGroups.ProprietarioId.class)
 	@NotNull
 	@Valid
+	@ConvertGroup(from = Default.class, to = ValidationGroups.ProprietarioId.class)
 	private ProprietarioDTO proprietario;
 	
 	public ObraDTO(Obra obj) {

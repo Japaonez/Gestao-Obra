@@ -17,7 +17,6 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import net.ufjnet.gestaoobra.dtos.ValidationGroups.ProprietarioId;
 import net.ufjnet.gestaoobra.models.Proprietario;
 
 @Setter
@@ -29,7 +28,7 @@ import net.ufjnet.gestaoobra.models.Proprietario;
 public class ProprietarioDTO extends RepresentationModel<ProprietarioDTO> implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
-	@NotNull(groups = ProprietarioId.class)
+	@NotNull(groups = ValidationGroups.ProprietarioId.class)
 	@EqualsAndHashCode.Include
 	@JsonProperty("codigoProp")
 	private Integer codigo;
@@ -39,6 +38,7 @@ public class ProprietarioDTO extends RepresentationModel<ProprietarioDTO> implem
 	@JsonProperty("nomeProp")
 	private String nome;
 	
+	@NotBlank
 	@Email
 	@JsonProperty("emailProp")
 	private String email;

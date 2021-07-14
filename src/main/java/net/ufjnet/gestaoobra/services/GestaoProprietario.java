@@ -64,7 +64,7 @@ public class GestaoProprietario {
 	
 	@Transactional
 	public ProprietarioDTO save(ProprietarioDTO objBody) {
-		Proprietario entity = new Proprietario(objBody.getCodigo(), objBody.getNome(), objBody.getCpf(), objBody.getEmail());
+		Proprietario entity = new Proprietario(objBody.getCodigo(), objBody.getNome(), objBody.getEmail(), objBody.getCpf());
 		
 		boolean cpfExists = dao.findByCpf(objBody.getCpf()).stream()
 				.anyMatch(objResult -> !objResult.equals(objBody));

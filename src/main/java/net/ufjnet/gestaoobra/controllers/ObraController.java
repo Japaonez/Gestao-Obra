@@ -72,7 +72,7 @@ public class ObraController {
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	@Operation(summary = "Insere uma nova obra")
-	public ResponseEntity<ObraDTO> incluir(@RequestBody @Valid ObraDTO objBody) {
+	public ResponseEntity<ObraDTO> incluir(@Valid @RequestBody ObraDTO objBody) {
 		ObraDTO objDTO = service.save(objBody);
 		objDTO.add(linkTo(methodOn(ObraController.class).buscarUm(objDTO.getCodigo())).withSelfRel());
 		return ResponseEntity.ok(objDTO);
