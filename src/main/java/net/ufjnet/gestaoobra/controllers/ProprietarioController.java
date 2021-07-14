@@ -28,7 +28,7 @@ import net.ufjnet.gestaoobra.models.Proprietario;
 import net.ufjnet.gestaoobra.services.GestaoProprietario;
 
 @RestController
-@RequestMapping("/gto/proprietarios")
+@RequestMapping("/v1/gto/proprietarios")
 public class ProprietarioController {
 
 	@Autowired //instancia o objeto
