@@ -36,10 +36,13 @@ public class ObraDTO extends RepresentationModel<ObraDTO> implements Serializabl
 	@JsonProperty("complementoObra")
 	private String complemento;
 	
+	private ProprietarioDTO proprietario;
+	
 	public ObraDTO(Obra obj) {
-		this.codigo = obj.getCodigo();
-		this.descricao = obj.getDescricao();
-		this.localizacao = obj.getLocalizacao();
-		this.complemento = obj.getComplemento();
+		codigo = obj.getCodigo();
+		descricao = obj.getDescricao();
+		localizacao = obj.getLocalizacao();
+		complemento = obj.getComplemento();
+		proprietario = new ProprietarioDTO(obj.getProprietario());
 	}
 }

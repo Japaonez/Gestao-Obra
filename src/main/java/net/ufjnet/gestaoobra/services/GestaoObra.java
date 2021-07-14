@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import lombok.AllArgsConstructor;
 import net.ufjnet.gestaoobra.dtos.ObraDTO;
 import net.ufjnet.gestaoobra.models.Obra;
+import net.ufjnet.gestaoobra.models.Proprietario;
 import net.ufjnet.gestaoobra.repositories.ObraDAO;
 import net.ufjnet.gestaoobra.services.exceptions.BusinessException;
 
@@ -43,7 +44,13 @@ public class GestaoObra {
 	
 	@Transactional
 	public ObraDTO save(ObraDTO obj) {
-		Obra entity = new Obra(obj.getCodigo(), obj.getDescricao(), obj.getLocalizacao(), obj.getComplemento());
+		Obra entity = new Obra(obj.getCodigo(), obj.getDescricao(), obj.getLocalizacao(), obj.getComplemento()
+				, new Proprietario(
+						obj.getProprietario().getCodigo(), 
+						obj.getProprietario().getNome(), 
+						obj.getProprietario().getCpf(), 
+						obj.getProprietario().getEmail())
+					);
 		
 		return new ObraDTO(dao.save(entity));
 	}
