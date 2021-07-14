@@ -3,6 +3,8 @@ package net.ufjnet.gestaoobra.controllers;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -53,7 +55,7 @@ public class ProprietarioController {
 	
 		Direction sortDirection = "desc".equalsIgnoreCase(direction) ? Direction.DESC : Direction.ASC;
 				
-		Pageable pageable = PageRequest.of(page, limit, Sort.by(sortDirection, "nome"));
+		Pageable pageable = PageRequest.of(page, limit, Sort.by(sortDirection, "codigo"));
 				
 		Page<ProprietarioDTO> pages = service.findAll(pageable);
 		pages
@@ -108,7 +110,7 @@ public class ProprietarioController {
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	@Operation(summary = "Insere um novo proprietário")
-	public ResponseEntity<ProprietarioDTO> incluir(@RequestBody ProprietarioDTO objBody) {
+	public ResponseEntity<ProprietarioDTO> incluir(@RequestBody @Valid ProprietarioDTO objBody) {
 		ProprietarioDTO objDTO = service.save(objBody);
 		objDTO.add(linkTo(methodOn(ProprietarioController.class).buscarUm(objDTO.getCodigo())).withSelfRel());
 		return ResponseEntity.ok(objDTO);

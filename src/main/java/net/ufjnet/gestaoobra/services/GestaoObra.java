@@ -10,6 +10,7 @@ import net.ufjnet.gestaoobra.dtos.ObraDTO;
 import net.ufjnet.gestaoobra.models.Obra;
 import net.ufjnet.gestaoobra.models.Proprietario;
 import net.ufjnet.gestaoobra.repositories.ObraDAO;
+import net.ufjnet.gestaoobra.repositories.ProprietarioDAO;
 import net.ufjnet.gestaoobra.services.exceptions.BusinessException;
 
 @AllArgsConstructor
@@ -17,6 +18,7 @@ import net.ufjnet.gestaoobra.services.exceptions.BusinessException;
 public class GestaoObra {
 	
 	private ObraDAO dao;
+	private ProprietarioDAO propDAO;
 
 	@Transactional(readOnly = true)
 	public Page<ObraDTO> findAll(Pageable pageable) {
@@ -51,7 +53,8 @@ public class GestaoObra {
 						obj.getProprietario().getCpf(), 
 						obj.getProprietario().getEmail())
 					);
-		
+		Proprietario prop = propDAO.findById(obj.getProprietario().getCodigo()).orElse(null);
+		entity.setProprietario(prop);
 		return new ObraDTO(dao.save(entity));
 	}
 	

@@ -9,8 +9,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -33,14 +31,10 @@ public class Obra implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column
 	private Integer codigo;
-	
-	@NotBlank
-	@Size(max = 255)
+
 	@Column(name = "descricao", nullable = false)
 	private String descricao;
 	
-	@NotBlank
-	@Size(max = 255)
 	@Column(nullable = false)
 	private String localizacao;
 	

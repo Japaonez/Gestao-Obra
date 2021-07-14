@@ -2,10 +2,17 @@ package net.ufjnet.gestaoobra.dtos;
 
 import java.io.Serializable;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import javax.validation.groups.ConvertGroup;
+
 import org.springframework.hateoas.RepresentationModel;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.databind.ser.std.StdKeySerializers.Default;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -26,16 +33,23 @@ public class ObraDTO extends RepresentationModel<ObraDTO> implements Serializabl
 	@EqualsAndHashCode.Include
 	@JsonProperty("codigoObra")
 	private Integer codigo;
-	
+
+	@NotBlank
+	@Size(max = 255)
 	@JsonProperty("descricaoObra")
 	private String descricao;
 	
+	@NotBlank
+	@Size(max = 255)
 	@JsonProperty("localizacaoObra")
 	private String localizacao;
 	
 	@JsonProperty("complementoObra")
 	private String complemento;
 	
+	@ConvertGroup(from = Default.class, to = ValidationGroups.ProprietarioId.class)
+	@NotNull
+	@Valid
 	private ProprietarioDTO proprietario;
 	
 	public ObraDTO(Obra obj) {
