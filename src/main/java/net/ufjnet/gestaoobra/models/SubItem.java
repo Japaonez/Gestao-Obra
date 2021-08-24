@@ -45,4 +45,12 @@ public class SubItem implements Serializable{
 	
 	@OneToMany(mappedBy = "subitem")
 	private Set<Lancamento> lancamentos;
+
+	public SubItem(Integer codigo, String descricao, String complemento, Item item) {
+		super();
+		this.codigo = codigo;
+		this.descricao = descricao;
+		this.complemento = complemento;
+		this.item = item;
+	}
 }
