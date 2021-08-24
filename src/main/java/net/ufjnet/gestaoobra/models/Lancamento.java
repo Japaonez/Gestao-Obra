@@ -1,7 +1,6 @@
 package net.ufjnet.gestaoobra.models;
 
 import java.io.Serializable;
-import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,7 +8,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -24,8 +22,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "Subitens")
-public class SubItem implements Serializable{
+@Table(name = "Lancamentos")
+public class Lancamento implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	@EqualsAndHashCode.Include
@@ -33,16 +31,23 @@ public class SubItem implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column
 	private Integer codigo;
+	
+	@ManyToOne()
+	private Obra obra;
+	
+	@ManyToOne()
+	private Item item;
+	
+	@ManyToOne()
+	private SubItem subitem;
+	
+	private Double valor;
 
 	@Column(name = "descricao", nullable = false)
 	private String descricao;
 	
 	@Column
-	private String complemento;
+	private String documento;
 	
-	@ManyToOne
-	private Item item;
-	
-	@OneToMany(mappedBy = "subitem")
-	private Set<Lancamento> lancamentos;
+	private String observacoes;
 }
