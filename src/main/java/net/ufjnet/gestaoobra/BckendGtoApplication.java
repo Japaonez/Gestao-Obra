@@ -37,13 +37,13 @@ public class BckendGtoApplication implements CommandLineRunner{
 		Proprietario p2 = new Proprietario(null, "Larissa", "larissa@gmail.com", "67890");
 		Proprietario p3 = new Proprietario(null, "Joao", "joao@gmail.com", "24680");
 		
-//		Obra o1 = new Obra(null, "Descrição", "Localização", "Complemento", p1);
-//		Obra o2 = new Obra(null, "Sobrado com 4 suítes", "Rua Dona Olimpia, 1414, Vila Fátima", "", p2);
-//		Obra o3 = new Obra(null, "Casa geminada", "Rua 15, 1515, Setor Hermosa", "", p3);
-//		Obra o4 = new Obra(null, "Casa com 3 quartos", "Rua 16, 1616, Setor Brisas", "", p3);
+		Obra o1 = new Obra(null, "Descrição", "Localização", "Complemento", p1);
+		Obra o2 = new Obra(null, "Sobrado com 4 suítes", "Rua Dona Olimpia, 1414, Vila Fátima", "", p2);
+		Obra o3 = new Obra(null, "Casa geminada", "Rua 15, 1515, Setor Hermosa", "", p3);
+		Obra o4 = new Obra(null, "Casa com 3 quartos", "Rua 16, 1616, Setor Brisas", "", p3);
 		
 		propDAO.saveAll(Arrays.asList(p1, p2, p3));
-//		obraDAO.saveAll(Arrays.asList(o1, o2, o3, o4));
+		obraDAO.saveAll(Arrays.asList(o1, o2, o3, o4));
 	}
 
 }

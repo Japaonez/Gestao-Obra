@@ -12,7 +12,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,7 +21,6 @@ import lombok.Setter;
 @Getter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Table(name = "Obras")
 public class Obra implements Serializable{
@@ -47,6 +45,15 @@ public class Obra implements Serializable{
 	private Proprietario proprietario;
 	
 	@OneToMany(mappedBy = "obra")
-	private Set<Obra> obras;
-//	private List<Obra> obras = new ArrayList<>();
+	private Set<Lancamento> lancamentos;
+
+	public Obra(Integer codigo, String descricao, String localizacao, String complemento, Proprietario proprietario) {
+		super();
+		this.codigo = codigo;
+		this.descricao = descricao;
+		this.localizacao = localizacao;
+		this.complemento = complemento;
+		this.proprietario = proprietario;
+	}
+	
 }

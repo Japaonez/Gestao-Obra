@@ -4,4 +4,16 @@ public interface ValidationGroups {
 	public interface ProprietarioId{
 		
 	}
+	
+	public interface ObraId{
+		
+	}
+	
+	public interface ItemId{
+		
+	}
+	
+	public interface SubItemId{
+		
+	}
 }
