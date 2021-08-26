@@ -8,11 +8,19 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import net.ufjnet.gestaoobra.models.Item;
+import net.ufjnet.gestaoobra.models.Lancamento;
 import net.ufjnet.gestaoobra.models.Obra;
 import net.ufjnet.gestaoobra.models.Proprietario;
+import net.ufjnet.gestaoobra.models.SubItem;
+import net.ufjnet.gestaoobra.repositories.ItemDAO;
+import net.ufjnet.gestaoobra.repositories.LancamentoDAO;
 import net.ufjnet.gestaoobra.repositories.ObraDAO;
 import net.ufjnet.gestaoobra.repositories.ProprietarioDAO;
+import net.ufjnet.gestaoobra.repositories.SubItemDAO;
+import net.ufjnet.gestaoobra.repositories.UserDAO;
 
 @EnableAutoConfiguration
 @ComponentScan
@@ -25,9 +33,24 @@ public class BckendGtoApplication implements CommandLineRunner{
 	@Autowired
 	private ObraDAO obraDAO;
 	
+	@Autowired
+	private ItemDAO itemDAO;
+	
+	@Autowired
+	private SubItemDAO subitemDAO;
+	
+	@Autowired
+	private LancamentoDAO lancamentoDAO;
+	
+	@Autowired
+	private UserDAO userDAO;
+	
 	public static void main(String[] args) {
 		SpringApplication.run(BckendGtoApplication.class, args);
 		
+		BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder(16);
+		String result = bCryptPasswordEncoder.encode("admin123");
+		System.out.println("Senha criptografada: " + result);		
 	}
 
 	@Override
@@ -42,8 +65,42 @@ public class BckendGtoApplication implements CommandLineRunner{
 		Obra o3 = new Obra(null, "Casa geminada", "Rua 15, 1515, Setor Hermosa", "", p3);
 		Obra o4 = new Obra(null, "Casa com 3 quartos", "Rua 16, 1616, Setor Brisas", "", p3);
 		
+		Item i1 = new Item(null, "Material Básico", "");
+		Item i2 = new Item(null, "Material de Acabamento", "");
+		Item i3 = new Item(null, "Material Pintura", "");
+		Item i4 = new Item(null, "Mão-de-Obra", "");
+		Item i5 = new Item(null, "Locações", "");
+		
+		SubItem si1 = new SubItem(null, "Fio Elétrico", "", i1);
+		SubItem si2 = new SubItem(null, "Cimento", "", i1);
+		SubItem si3 = new SubItem(null, "Tijolo", "", i1);
+		
+		SubItem si4 = new SubItem(null, "Argamassa", "", i2);
+		SubItem si5 = new SubItem(null, "Porcelanato", "", i2);
+		
+		SubItem si6 = new SubItem(null, "Massa Corrida", "", i3);
+		SubItem si7 = new SubItem(null, "Tinta", "", i3);
+		
+		SubItem si8 = new SubItem(null, "Pedreiro", "", i4);
+		
+		Lancamento l1 = new Lancamento(null, o1, i1, si1, 150.50, "Parte Elétrica", "", "");
+		Lancamento l2 = new Lancamento(null, o1, i1, si2, 250.50, "Contra-Piso", "", "");
+		Lancamento l3 = new Lancamento(null, o1, i2, si4, 250.50, "Piso", "", "");
+		Lancamento l4 = new Lancamento(null, o2, i2, si5, 250.50, "Piso", "", "");
+		Lancamento l5 = new Lancamento(null, o2, i3, si6, 250.50, "Contra-Piso", "", "");
+		Lancamento l6 = new Lancamento(null, o3, i4, si8, 250.50, "Contra-Piso", "", "");
+		Lancamento l7 = new Lancamento(null, o3, i4, si8, 250.50, "Contra-Piso", "", "");
+		Lancamento l8 = new Lancamento(null, o4, i3, si7, 250.50, "Contra-Piso", "", "");
+		Lancamento l9 = new Lancamento(null, o4, i4, si2, 250.50, "Contra-Piso", "", "");
+		Lancamento l10 = new Lancamento(null, o4, i4, si8, 250.50, "Contra-Piso", "", "");
+		
+
+		
 		propDAO.saveAll(Arrays.asList(p1, p2, p3));
 		obraDAO.saveAll(Arrays.asList(o1, o2, o3, o4));
+		itemDAO.saveAll(Arrays.asList(i1, i2, i3, i4, i5));
+		subitemDAO.saveAll(Arrays.asList(si1, si2, si3, si4, si5, si6, si7, si8));
+		lancamentoDAO.saveAll(Arrays.asList(l1, l2, l3, l4, l5, l6, l7, l8, l9, l10));
 	}
 
 }
