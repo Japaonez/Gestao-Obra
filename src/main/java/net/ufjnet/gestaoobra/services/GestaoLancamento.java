@@ -1,5 +1,6 @@
 package net.ufjnet.gestaoobra.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
@@ -9,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import lombok.AllArgsConstructor;
 import net.ufjnet.gestaoobra.dtos.LancamentoDTO;
+import net.ufjnet.gestaoobra.dtos.TotalItemDTO;
 import net.ufjnet.gestaoobra.models.Item;
 import net.ufjnet.gestaoobra.models.Lancamento;
 import net.ufjnet.gestaoobra.models.Obra;
@@ -32,6 +34,11 @@ public class GestaoLancamento {
 	public Page<LancamentoDTO> findAll(Pageable pageable) {
 		Page<Lancamento> result = dao.findAll(pageable);
 		return result.map(obj -> new LancamentoDTO(obj));
+	}
+	
+	@Transactional(readOnly = true)
+	public List<TotalItemDTO> totalItem() {
+		return dao.totalItem();
 	}
 	
 
