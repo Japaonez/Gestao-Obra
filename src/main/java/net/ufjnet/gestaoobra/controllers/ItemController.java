@@ -80,8 +80,8 @@ public class ItemController {
 
 	@PutMapping
 	@Operation(summary = "Atualiza um item")
-	public ResponseEntity<ItemDTO> atualizar(@PathVariable Integer id, @RequestBody ItemDTO objBody) {
-		ItemDTO objDTO = service.save(objBody);
+	public ResponseEntity<ItemDTO> atualizar(@RequestBody ItemDTO objBody) {
+		ItemDTO objDTO = service.update(objBody);
 		objDTO.add(linkTo(methodOn(ItemController.class).buscarUm(objDTO.getCodigo())).withSelfRel());
 		return ResponseEntity.ok(objDTO);
 	}		
