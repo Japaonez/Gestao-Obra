@@ -10,10 +10,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
 import net.ufjnet.gestaoobra.models.Item;
+import net.ufjnet.gestaoobra.models.Lancamento;
 import net.ufjnet.gestaoobra.models.Obra;
 import net.ufjnet.gestaoobra.models.Proprietario;
 import net.ufjnet.gestaoobra.models.SubItem;
 import net.ufjnet.gestaoobra.repositories.ItemDAO;
+import net.ufjnet.gestaoobra.repositories.LancamentoDAO;
 import net.ufjnet.gestaoobra.repositories.ObraDAO;
 import net.ufjnet.gestaoobra.repositories.ProprietarioDAO;
 import net.ufjnet.gestaoobra.repositories.SubItemDAO;
@@ -34,6 +36,9 @@ public class BckendGtoApplication implements CommandLineRunner{
 	
 	@Autowired
 	private SubItemDAO subitemDAO;
+	
+	@Autowired
+	private LancamentoDAO lancamentoDAO;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(BckendGtoApplication.class, args);
@@ -70,10 +75,22 @@ public class BckendGtoApplication implements CommandLineRunner{
 		
 		SubItem si8 = new SubItem(null, "Pedreiro", "", i4);
 		
+		Lancamento l1 = new Lancamento(null, o1, i1, si1, 150.50, "Parte Elétrica", "", "");
+		Lancamento l2 = new Lancamento(null, o1, i1, si2, 250.50, "Contra-Piso", "", "");
+		Lancamento l3 = new Lancamento(null, o1, i2, si4, 250.50, "Piso", "", "");
+		Lancamento l4 = new Lancamento(null, o2, i2, si5, 250.50, "Piso", "", "");
+		Lancamento l5 = new Lancamento(null, o2, i3, si6, 250.50, "Contra-Piso", "", "");
+		Lancamento l6 = new Lancamento(null, o3, i4, si8, 250.50, "Contra-Piso", "", "");
+		Lancamento l7 = new Lancamento(null, o3, i4, si8, 250.50, "Contra-Piso", "", "");
+		Lancamento l8 = new Lancamento(null, o4, i3, si7, 250.50, "Contra-Piso", "", "");
+		Lancamento l9 = new Lancamento(null, o4, i4, si2, 250.50, "Contra-Piso", "", "");
+		Lancamento l10 = new Lancamento(null, o4, i4, si8, 250.50, "Contra-Piso", "", "");
+		
 		propDAO.saveAll(Arrays.asList(p1, p2, p3));
 		obraDAO.saveAll(Arrays.asList(o1, o2, o3, o4));
 		itemDAO.saveAll(Arrays.asList(i1, i2, i3, i4, i5));
 		subitemDAO.saveAll(Arrays.asList(si1, si2, si3, si4, si5, si6, si7, si8));
+		lancamentoDAO.saveAll(Arrays.asList(l1, l2, l3, l4, l5, l6, l7, l8, l9, l10));
 	}
 
 }

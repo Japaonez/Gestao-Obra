@@ -80,8 +80,8 @@ public class SubItemController {
 
 	@PutMapping
 	@Operation(summary = "Atualiza um subitem")
-	public ResponseEntity<SubItemDTO> atualizar(@PathVariable Integer id, @RequestBody SubItemDTO objBody) {
-		SubItemDTO objDTO = service.save(objBody);
+	public ResponseEntity<SubItemDTO> atualizar(@RequestBody SubItemDTO objBody) {
+		SubItemDTO objDTO = service.update(objBody);
 		objDTO.add(linkTo(methodOn(SubItemController.class).buscarUm(objDTO.getCodigo())).withSelfRel());
 		return ResponseEntity.ok(objDTO);
 	}		
