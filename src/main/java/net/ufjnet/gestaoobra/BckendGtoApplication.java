@@ -8,6 +8,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import net.ufjnet.gestaoobra.models.Item;
 import net.ufjnet.gestaoobra.models.Lancamento;
@@ -19,6 +20,7 @@ import net.ufjnet.gestaoobra.repositories.LancamentoDAO;
 import net.ufjnet.gestaoobra.repositories.ObraDAO;
 import net.ufjnet.gestaoobra.repositories.ProprietarioDAO;
 import net.ufjnet.gestaoobra.repositories.SubItemDAO;
+import net.ufjnet.gestaoobra.repositories.UserDAO;
 
 @EnableAutoConfiguration
 @ComponentScan
@@ -40,9 +42,15 @@ public class BckendGtoApplication implements CommandLineRunner{
 	@Autowired
 	private LancamentoDAO lancamentoDAO;
 	
+	@Autowired
+	private UserDAO userDAO;
+	
 	public static void main(String[] args) {
 		SpringApplication.run(BckendGtoApplication.class, args);
 		
+		BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder(16);
+		String result = bCryptPasswordEncoder.encode("admin123");
+		System.out.println("Senha criptografada: " + result);		
 	}
 
 	@Override
@@ -85,6 +93,8 @@ public class BckendGtoApplication implements CommandLineRunner{
 		Lancamento l8 = new Lancamento(null, o4, i3, si7, 250.50, "Contra-Piso", "", "");
 		Lancamento l9 = new Lancamento(null, o4, i4, si2, 250.50, "Contra-Piso", "", "");
 		Lancamento l10 = new Lancamento(null, o4, i4, si8, 250.50, "Contra-Piso", "", "");
+		
+
 		
 		propDAO.saveAll(Arrays.asList(p1, p2, p3));
 		obraDAO.saveAll(Arrays.asList(o1, o2, o3, o4));
