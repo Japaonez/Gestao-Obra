@@ -136,6 +136,7 @@ public class BckendGtoApplication implements CommandLineRunner{
 		
 		u1.getPermission().addAll(Arrays.asList(pm1, pm2));
 		u2.getPermission().addAll(Arrays.asList(pm2));
+
 		
 		propDAO.saveAll(Arrays.asList(p1, p2, p3));
 		obraDAO.saveAll(Arrays.asList(o1, o2, o3, o4));
