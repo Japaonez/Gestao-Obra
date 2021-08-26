@@ -36,13 +36,13 @@ public class User implements UserDetails, Serializable{
 	
 	private String password;
 	
-	private Boolean AccountNonExpired;
+	private Boolean accountNonExpired;
 	
-	private Boolean AccountNonLocked;
+	private Boolean accountNonLocked;
 	
-	private Boolean CredentialsNonExpired;
+	private Boolean credentialsNonExpired;
 	
-	private Boolean Enabled;
+	private Boolean enabled;
 	
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "userPermission", joinColumns = @JoinColumn(name = "idUser"), 
@@ -59,44 +59,102 @@ public class User implements UserDetails, Serializable{
 	
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.permission;
 	}
 
 	@Override
 	public String getPassword() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.password;
 	}
 
 	@Override
 	public String getUsername() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.username;
+	}
+	
+	public String getFullName() {
+		return this.fullName;
 	}
 
 	@Override
 	public boolean isAccountNonExpired() {
-		// TODO Auto-generated method stub
-		return false;
+		return this.accountNonExpired;
 	}
 
 	@Override
 	public boolean isAccountNonLocked() {
-		// TODO Auto-generated method stub
-		return false;
+		return this.accountNonLocked;
 	}
 
 	@Override
 	public boolean isCredentialsNonExpired() {
-		// TODO Auto-generated method stub
-		return false;
+		return this.credentialsNonExpired;
 	}
 
 	@Override
 	public boolean isEnabled() {
-		// TODO Auto-generated method stub
-		return false;
+		return this.enabled;
 	}
 
+	public void setCodigo(Integer codigo) {
+		this.codigo = codigo;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public void setFullName(String fullName) {
+		this.fullName = fullName;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public void setAccountNonExpired(Boolean accountNonExpired) {
+		this.accountNonExpired = accountNonExpired;
+	}
+
+	public void setAccountNonLocked(Boolean accountNonLocked) {
+		this.accountNonLocked = accountNonLocked;
+	}
+
+	public void setCredentialsNonExpired(Boolean credentialsNonExpired) {
+		this.credentialsNonExpired = credentialsNonExpired;
+	}
+
+	public void setEnabled(Boolean enabled) {
+		this.enabled = enabled;
+	}
+
+	public void setPermission(Set<Permission> permission) {
+		this.permission = permission;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((codigo == null) ? 0 : codigo.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		User other = (User) obj;
+		if (codigo == null) {
+			if (other.codigo != null)
+				return false;
+		} else if (!codigo.equals(other.codigo))
+			return false;
+		return true;
+	}
+	
 }
