@@ -45,9 +45,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.authorizeRequests()
 				.antMatchers("/autentica/assinatura", "/api-docs/**", "/swagger-ui.html**").permitAll()
 				.antMatchers("/v1/gto/**").authenticated()
-				.antMatchers("/users").denyAll()
-			.and()
-			.apply(new JwtTokenConfigure(tokenProvider));
+				.antMatchers("/users").denyAll();
+//			.and()
+//			.apply(new JwtTokenConfigure(tokenProvider));
 	}
 
 	@Bean

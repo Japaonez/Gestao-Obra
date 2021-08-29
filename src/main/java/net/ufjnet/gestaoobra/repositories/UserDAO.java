@@ -7,6 +7,6 @@ import org.springframework.data.repository.query.Param;
 import net.ufjnet.gestaoobra.models.User;
 
 public interface UserDAO extends JpaRepository<User, Integer>{
-	@Query("SELECT obj FROM User obj WHERE obj.username =: username")
+	@Query("SELECT obj FROM User obj WHERE obj.username =:username")
 	User findByUsername(@Param("username") String username);
 }

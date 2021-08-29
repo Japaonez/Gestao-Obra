@@ -130,19 +130,19 @@ public class BckendGtoApplication implements CommandLineRunner{
 		Permission pm2 = new Permission();
 		pm2.setDescricao("USUARIO");
 		
-		u1.getPermission().addAll(Arrays.asList(pm1, pm2));
-		u2.getPermission().addAll(Arrays.asList(pm2));
-		
 		pm1.getUser().addAll(Arrays.asList(u1));
 		pm2.getUser().addAll(Arrays.asList(u1, u2));
+		
+		u1.getPermission().addAll(Arrays.asList(pm1, pm2));
+		u2.getPermission().addAll(Arrays.asList(pm2));
 		
 		propDAO.saveAll(Arrays.asList(p1, p2, p3));
 		obraDAO.saveAll(Arrays.asList(o1, o2, o3, o4));
 		itemDAO.saveAll(Arrays.asList(i1, i2, i3, i4, i5));
 		subitemDAO.saveAll(Arrays.asList(si1, si2, si3, si4, si5, si6, si7, si8));
 		lancamentoDAO.saveAll(Arrays.asList(l1, l2, l3, l4, l5, l6, l7, l8, l9, l10));
-		userDAO.saveAll(Arrays.asList(u1, u2));
 		permissionDAO.saveAll(Arrays.asList(pm1, pm2));
+		userDAO.saveAll(Arrays.asList(u1, u2));
 	}
 
 }

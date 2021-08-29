@@ -13,6 +13,8 @@ import javax.persistence.Table;
 
 import org.springframework.security.core.GrantedAuthority;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -36,6 +38,7 @@ public class Permission implements GrantedAuthority, Serializable{
 		return this.descricao;
 	}
 	
+	@JsonIgnore
 	@ManyToMany(mappedBy = "permission")
 	private List<User> user = new ArrayList<>();
 
