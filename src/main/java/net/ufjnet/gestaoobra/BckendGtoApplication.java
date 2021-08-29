@@ -69,6 +69,7 @@ public class BckendGtoApplication implements CommandLineRunner{
 		r2 = bCrypt.encode("user123");
 		
 		Proprietario p1 = new Proprietario(null, "Nome", "nome@gmail.com", "12345");
+//		Proprietario p1 = new Proprietario(null, "Jhonata", "japakmk@hotmail.com", "12345");
 		Proprietario p2 = new Proprietario(null, "Larissa", "larissa@gmail.com", "67890");
 		Proprietario p3 = new Proprietario(null, "Joao", "joao@gmail.com", "24680");
 		
