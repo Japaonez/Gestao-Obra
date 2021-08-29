@@ -1,11 +1,14 @@
 package net.ufjnet.gestaoobra.models;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -32,5 +35,8 @@ public class Permission implements GrantedAuthority, Serializable{
 	public String getAuthority() {
 		return this.descricao;
 	}
+	
+	@ManyToMany(mappedBy = "permission")
+	private List<User> user = new ArrayList<>();
 
 }
