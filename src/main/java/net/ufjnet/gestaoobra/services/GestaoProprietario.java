@@ -16,6 +16,8 @@ import net.ufjnet.gestaoobra.services.exceptions.BusinessException;
 public class GestaoProprietario {
 	
 	private ProprietarioDAO dao;
+	
+	private EnviarMailService email;
 
 	@Transactional(readOnly = true)
 	public Page<ProprietarioDTO> findAll(Pageable pageable) {
@@ -63,22 +65,35 @@ public class GestaoProprietario {
 	}
 	
 	@Transactional
-	public ProprietarioDTO save(ProprietarioDTO objBody) {
-		Proprietario entity = new Proprietario(objBody.getCodigo(), objBody.getNome(), objBody.getEmail(), objBody.getCpf());
+	public ProprietarioDTO save(ProprietarioDTO obj) {
+		Proprietario entity = new Proprietario(obj.getCodigo(), obj.getNome(), obj.getCpf(), obj.getEmail());
 		
-		boolean cpfExists = dao.findByCpf(objBody.getCpf()).stream()
-				.anyMatch(objResult -> !objResult.equals(objBody));
-		if(cpfExists) {
-			throw new BusinessException("CPF já cadastrado!");
+		boolean cpfExists = dao.findByCpf(entity.getCpf())
+				.stream()
+				.anyMatch(objResult -> !objResult.equals(entity));
+		
+		if (cpfExists) {
+			throw new BusinessException("CPF já existente!");
 		}
-		boolean emailExists = dao.findByEmail(objBody.getEmail()).stream()
-				.anyMatch(objResult -> !objResult.equals(objBody));
-		if(emailExists) {
-			throw new BusinessException("E-mail já cadastrado!");
+		
+		boolean emailExists = dao.findByEmail(entity.getEmail())
+				.stream()
+				.anyMatch(objResult -> !objResult.equals(entity));
+		
+		if (emailExists) {
+			throw new BusinessException("E-mail já existente!");
+		}
+		
+		try {
+			String textoMail = "Informamos que seus dados foram cadastrados no sistema Gestão de Obras";
+			email.enviar(entity.getEmail(), "Cadastro Efetuado!", textoMail);
+		} catch (Exception e) {
+			throw new BusinessException("Erro no envio do e-mail!");
 		}
 		
 		return new ProprietarioDTO(dao.save(entity));
 	}
+
 	
 	@Transactional
 	public void deleteById(Integer id) {

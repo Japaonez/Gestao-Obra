@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -47,19 +46,18 @@ public class User implements UserDetails, Serializable{
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "userPermission", joinColumns = @JoinColumn(name = "idUser"), 
 			   inverseJoinColumns = @JoinColumn(name = "idPermission"))
-	private Set<Permission> permission;
+	private List<Permission> permissions = new ArrayList<>();
 
 	public List<String> getRoles() {
 		List<String> roles = new ArrayList<>();
-		for(Permission permission : this.permission) {
+		for(Permission permission : this.permissions) {
 			roles.add(permission.getDescricao());
 		}
 		return roles;
 	}
-	
-	@Override
-	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return this.permission;
+
+	public void setPermissions(List<Permission> permissions) {
+		this.permissions = permissions;
 	}
 
 	@Override
@@ -128,8 +126,8 @@ public class User implements UserDetails, Serializable{
 		this.enabled = enabled;
 	}
 
-	public void setPermission(Set<Permission> permission) {
-		this.permission = permission;
+	public List<Permission> getPermissions() {
+		return permissions;
 	}
 
 	@Override
@@ -155,6 +153,12 @@ public class User implements UserDetails, Serializable{
 		} else if (!codigo.equals(other.codigo))
 			return false;
 		return true;
+	}
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }

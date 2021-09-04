@@ -15,15 +15,16 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import net.ufjnet.gestaoobra.security.jwt.JwtTokenConfigure;
+import net.ufjnet.gestaoobra.security.jwt.JwtConfigurer;
 import net.ufjnet.gestaoobra.security.jwt.JwtTokenProvider;
 
-@Configuration
-@EnableWebSecurity
+@Configuration 
+@EnableWebSecurity 
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
 	@Autowired
 	private JwtTokenProvider tokenProvider;
-	
+
 	@Bean
 	public BCryptPasswordEncoder passwordEncoder() {
 		BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
@@ -43,12 +44,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 			.and()
 				.authorizeRequests()
-				.antMatchers("/autentica/assinatura", "/api-docs/**", "/swagger-ui.html**").permitAll()
-				.antMatchers("/v1/gto/**").authenticated()
+				.antMatchers("/autentica/assinatura", "/v1/gto/**", "/v3/api-docs/**", "/swagger-ui.html**").permitAll()
+				//.antMatchers("/v1/gto/**").authenticated()
 				.antMatchers("/users").denyAll()
-			.and()
-			.apply(new JwtTokenConfigure(tokenProvider));
-	}
+				.and()
+				.apply(new JwtConfigurer(tokenProvider));
+		
+		}
+
 
 	@Bean
 	CorsConfigurationSource corsConfigurationSource() {
@@ -59,3 +62,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		return source;
 	}
 }
+
+	
