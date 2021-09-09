@@ -66,8 +66,6 @@ public class BckendGtoApplication implements CommandLineRunner{
 
 	@Override
 	public void run(String... args) throws Exception {
-		// TODO Auto-generated method stub
-		
 		BCryptPasswordEncoder bCrypt = new BCryptPasswordEncoder();
 		r1 = bCrypt.encode("admin123");
 		r2 = bCrypt.encode("user123");
