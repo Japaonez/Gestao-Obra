@@ -19,7 +19,6 @@ public class EnviarMailService {
 		email.setSubject(subj);
 		email.setText(text);
 		mailSender.send(email);
-		
 	}
 
 }
