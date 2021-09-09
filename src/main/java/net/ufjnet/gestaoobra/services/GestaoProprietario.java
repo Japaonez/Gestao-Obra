@@ -10,6 +10,7 @@ import net.ufjnet.gestaoobra.dtos.ProprietarioDTO;
 import net.ufjnet.gestaoobra.models.Proprietario;
 import net.ufjnet.gestaoobra.repositories.ProprietarioDAO;
 import net.ufjnet.gestaoobra.services.exceptions.BusinessException;
+import net.ufjnet.gestaoobra.services.exceptions.MailException;
 
 @AllArgsConstructor
 @Service
@@ -61,6 +62,14 @@ public class GestaoProprietario {
 		entity.setNome(obj.getNome());
 		entity.setCpf(obj.getCpf());
 		entity.setEmail(obj.getEmail());
+		
+		try {
+			String textoMail = "Informamos que seus dados foram ATUALIZADOS no sistema Gestão de Obras";
+			email.enviar(entity.getEmail(), "Cadastro ATUALIZADO!", textoMail);
+		} catch (Exception e) {
+			throw new MailException("Erro no envio do e-mail!", e);
+		}
+		
 		return new ProprietarioDTO(dao.save(entity));
 	}
 	
@@ -85,10 +94,10 @@ public class GestaoProprietario {
 		}
 		
 		try {
-			String textoMail = "Informamos que seus dados foram cadastrados no sistema Gestão de Obras";
+			String textoMail = "Informamos que seus dados foram CADASTRADOS no sistema Gestão de Obras";
 			email.enviar(entity.getEmail(), "Cadastro Efetuado!", textoMail);
 		} catch (Exception e) {
-			throw new BusinessException("Erro no envio do e-mail!");
+			throw new MailException("Erro no envio do e-mail!", e);
 		}
 		
 		return new ProprietarioDTO(dao.save(entity));
