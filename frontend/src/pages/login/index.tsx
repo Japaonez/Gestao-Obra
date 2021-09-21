@@ -7,6 +7,7 @@ import Lock from "../../assets/images/padlock.png";
 import "../../services/api";
 import { MdLock, MdForum } from "react-icons/md";
 import { HiEye, HiEyeOff } from "react-icons/hi";
+import { Link } from "react-router-dom";
 
 function Login() {
   const [username, setUsername] = useState("");
@@ -79,8 +80,9 @@ function Login() {
                 )}
               </div>
             </div>
-
-            <button type="submit">E N T R A R</button>
+            <Link to="/proprietarios">
+              <button type="submit">E N T R A R</button>
+            </Link>
           </div>
         </form>
       </div>
