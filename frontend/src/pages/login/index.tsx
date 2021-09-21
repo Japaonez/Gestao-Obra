@@ -27,7 +27,7 @@ function Login() {
       localStorage.setItem("username", username);
       localStorage.setItem("toker", response.data.token);
 
-      history.push("/proprietarios");
+      history.push("/dashboard");
     } catch (error) {
       alert("Autenticação sem sucesso, tente novamente!");
     }

@@ -38,24 +38,69 @@ const Proprietario: React.FC = () => {
     else getProprietario();
   }, [propId]);
 
+  async function saveOrUpdate(e: any) {
+    e.preventDefault();
+
+    const data = {
+      codigo,
+      nome,
+      email,
+      cpf,
+    };
+
+    try {
+      if (propId == "0") {
+        await api.post(`v1/gto/proprietarios`, data, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+      } else {
+        data.codigo = codigo;
+        await api.post(`v1/gto/proprietarios`, data, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+      }
+      history.push("/proprietarios");
+    } catch (error) {
+      alert(
+        "Erro na inclusão do proprietário. " + error + " Tente noovamente!"
+      );
+    }
+  }
+
   return (
     <div className="new-prop-container">
       <div className="content">
         <section className="form">
           <h2>Cadastro de Proprietários</h2>
           <img src={logoImage} alt="Gestão de Obras" />
-          <h3> Cadastrar Proprietário</h3>
+          <h3>{propId == "0" ? "Adicionar" : "Atualizar"} Proprietário</h3>
           <p>
             Entre com as informações do proprietário e clique em Adicionar! Ou
             clique em Listar para ver os proprietários cadastrados.
           </p>
         </section>
-        <form>
-          <input placeholder="Nome do Proprietário" value={""} />
-          <input placeholder="E-mail do Proprietário" value={""} />
-          <input placeholder="CPF do Proprietário" value={""} />
+        <form onSubmit={saveOrUpdate}>
+          <input
+            placeholder="Nome do Proprietário"
+            value={nome}
+            onChange={(e) => setNome(e.target.value)}
+          />
+          <input
+            placeholder="E-mail do Proprietário"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <input
+            placeholder="CPF do Proprietário"
+            value={cpf}
+            onChange={(e) => setCpf(e.target.value)}
+          />
           <button className="button" type="submit">
-            Adicionar
+            {propId == "0" ? "Adicionar" : "Atualizar"}
           </button>
           <Link to="/proprietarios">
             <button className="button"> Listar</button>
