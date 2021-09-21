@@ -1,91 +1,65 @@
-.proprietario-container {
+.new-prop-container {
   width: 100%;
-  max-width: 1180px;
-  padding: 0 30px;
-  margin: 32px auto;
+  max-width: 1120px;
+  height: 100vh;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
-.proprietario-container header {
+.new-prop-container .content {
+  width: 100%;
+  padding: 100px;
+  background: #f0f0f5;
+  box-shadow: 0 0 100px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
   display: flex;
   align-items: center;
 }
 
-.subheader {
-  margin-left: 260px;
+.new-prop-container .content section {
+  width: 100%;
+  max-width: 380px;
 }
 
-.proprietario-container header span {
-  font-size: 20px;
-  margin-left: 18px;
+.new-prop-container section.form {
+  width: 100%;
+  max-width: 350px;
+  margin-right: 30px;
+  height: 50%;
 }
 
-.proprietario-container header span strong {
-  color: #251fc5;
-}
-
-.proprietario-container header img {
-  height: 64px;
-}
-
-.proprietario-container header a {
-  width: 260px;
-  margin-left: 18px;
-  margin-top: 0;
-}
-
-.proprietario-container header button {
-  height: 60px;
-  width: 60px;
-  border-radius: 4px;
-  border: 1px solid #dcdce6;
-  background: transparent;
-  margin-left: 16px;
-  transition: border-color 0.5s;
-}
-
-.proprietario-container header button:hover {
-  border-color: #251fc5;
-}
-
-.proprietario-container h1 {
-  margin-top: 80px;
-  margin-bottom: 24px;
-}
-
-.proprietario-container tr td {
-  background: #ffffff;
-  padding: 12px;
-  border-radius: 8px;
-  position: relative;
-}
-
-.proprietario-container tr td button {
-  right: 24px;
-  top: 24px;
-  border: 0;
-  background: transparent;
-}
-
-.proprietario-container tr td button + button {
-  top: 50px;
-}
-
-.proprietario-container tr td button:hover {
-  opacity: 0.8;
-}
-
-.proprietario-container tr td strong {
+.new-prop-container section.form img {
+  width: 35%;
+  margin-left: auto;
+  margin-right: auto;
   display: block;
-  margin-bottom: 16px;
-  color: #41414d;
 }
 
-.proprietario-container p + strong {
-  margin-top: 32px;
+.new-prop-container .content section h2 {
+  margin: 64px 0 32px;
+  font-size: 36px;
+  text-align: center;
+}
+.new-prop-container .content section h3 {
+  margin: 64px 0 32px;
+  font-size: 22px;
+  text-align: center;
 }
 
-.proprietario-container p {
+.new-prop-container .content section p {
+  font-size: 12px;
   color: #737380;
-  line-height: 21px;
-  font-size: 16px;
+  line-height: 32px;
+  text-align: center;
+}
+
+.new-prop-container .content form {
+  width: 100%;
+  max-width: 450px;
+}
+
+.new-prop-container .content form input {
+  margin-top: 8px;
 }
